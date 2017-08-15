@@ -17,7 +17,7 @@ public class openJobjects {
 
         final String LIST = "results";
 
-        ArrayList<movie> parsedData = null;
+        ArrayList<movie> parsedData = new ArrayList<movie>(20);
 
         JSONObject movieJson = new JSONObject(httpstring);
 
@@ -36,7 +36,6 @@ public class openJobjects {
 
         JSONArray movieArray = movieJson.getJSONArray(LIST);
 
-        parsedData = new ArrayList<movie>(20);
 
         for (int i = 0; i < 20; i++) {
             String title;

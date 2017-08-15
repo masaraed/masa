@@ -1,23 +1,28 @@
 package com.example.android.popmovies;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 
 
 public class Adapter_ViewHolder extends RecyclerView.Adapter<Adapter_ViewHolder.ImageViewHolder>  {
    int numberofitems;
     private ListItemClickListner mOnClickListner;
-    private ArrayList<movie> movies;
+        private ArrayList<movie> movies;
 
 
-    public Adapter_ViewHolder(int Numberofitems,ListItemClickListner listner,ArrayList<movie>movies1)
+    public Adapter_ViewHolder(int Numberofitems,ListItemClickListner listner,ArrayList<movie> movies1)
    {
        numberofitems=Numberofitems;
        mOnClickListner=listner;
@@ -36,7 +41,7 @@ public class Adapter_ViewHolder extends RecyclerView.Adapter<Adapter_ViewHolder.
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
-
+    holder.bind();
     }
 
 
@@ -62,13 +67,14 @@ return numberofitems;
            m=(ImageView) view.findViewById(R.id.thumb_image);
            m.setOnClickListener(this);
            context = view.getContext();
-           //Picasso.with(context).load(NetworkUtils.BASE_URL+"/"+movies.get(getAdapterPosition()).getPoster_path()).into(m);
-
-
 
        }
        public void bind()
        {
+           movie  movie =movies.get(getAdapterPosition());
+
+           Picasso.with(context).load("http://image.tmdb.org/t/p/w185/"+movie.getPoster_path()).into(m);
+
 
 
        }
@@ -78,12 +84,14 @@ return numberofitems;
             public void onClick(View v) {
                 movie  movie =movies.get(getAdapterPosition());
                 mOnClickListner.onListItemClick(movie);
+
+
             }
 
     }
 
    public interface ListItemClickListner{
-       void onListItemClick(movie clickedItmIndex);
+       void onListItemClick(movie movies);
 
    }
 
