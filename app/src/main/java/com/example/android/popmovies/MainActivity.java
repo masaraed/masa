@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
 
         if(savedInstanceState == null) {
             FetchTask fetchTask = new FetchTask();
-
+ 
             try {
                 movies = fetchTask.execute().get();
             }
