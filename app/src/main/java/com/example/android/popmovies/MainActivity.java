@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
 
         if(savedInstanceState == null) {
             FetchTask fetchTask = new FetchTask();
- 
+
             try {
                 movies = fetchTask.execute().get();
             }
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
         else {
             movies = savedInstanceState.getParcelableArrayList("movie");
         }
+
         mAdapter = new Adapter_ViewHolder(numberoftheitems, this,movies);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -69,9 +71,12 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-    if(id!=R.id.mostpopular) {
-        id = item.getItemId();
+        id=item.getItemId();
+       if(id!=R.id.mostpopular)
+           return true;
 
+       else
+           {
 
         try {
             movies = new FetchTask().execute().get();
@@ -82,15 +87,10 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
             e.printStackTrace();
 
     }
-
-        mAdapter = new Adapter_ViewHolder(numberoftheitems, this, movies);
-        mRecyclerView.setAdapter(mAdapter);
-
-
+               mAdapter = new Adapter_ViewHolder(numberoftheitems, this,movies);
+             mAdapter.updateList(movies);
         return true;
     }
-    else
-        return true;
 
     }
 
@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
         @Override
         protected ArrayList<movie> doInBackground(Void... voids) {
             URL url = NetworkUtils.buildUrl(id);
+
             try {
 
                 String httprespondString = NetworkUtils.getResponseFromHttpUrl(url);

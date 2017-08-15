@@ -38,6 +38,10 @@ public class Adapter_ViewHolder extends RecyclerView.Adapter<Adapter_ViewHolder.
         return new ImageViewHolder(view);
 
     }
+    public void updateList(ArrayList<movie> movies2) {
+        movies = movies2;
+        notifyDataSetChanged();
+    }
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
