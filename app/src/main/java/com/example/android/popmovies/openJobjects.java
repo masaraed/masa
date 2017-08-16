@@ -1,12 +1,8 @@
 package com.example.android.popmovies;
-
 import android.content.Context;
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
@@ -41,7 +37,6 @@ public class openJobjects {
             String title;
             String poster_path;
             String original_title;
-
             String overview;
             String release_date;
             double vote_average;

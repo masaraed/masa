@@ -1,8 +1,5 @@
 package com.example.android.popmovies;
-
-import android.content.Context;
 import android.net.Uri;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -18,13 +15,13 @@ public class NetworkUtils {
     final static String BASE_URL =
             "http://api.themoviedb.org/3/movie/";
     final static String apikey="api_key=0d8a00c9715591d453d2184f3aab8cae";
+     public static String string;
 
-
-    public static URL buildUrl(String s) {
+    public static URL buildUrl() {
 
         Uri builtUri=null;
 
-            builtUri= Uri.parse(BASE_URL).buildUpon().appendPath(s).appendQueryParameter("api_key","0d8a00c9715591d453d2184f3aab8cae")
+            builtUri= Uri.parse(BASE_URL).buildUpon().appendPath(string).appendQueryParameter("api_key","0d8a00c9715591d453d2184f3aab8cae")
                     .build();
 
         URL url = null;
@@ -34,7 +31,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
 
         return url;
     }

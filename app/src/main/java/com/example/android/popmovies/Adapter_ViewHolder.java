@@ -10,9 +10,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 
 
@@ -68,9 +65,10 @@ return numberofitems;
        public ImageViewHolder(View view)
        {
            super(view);
-           m=(ImageView) view.findViewById(R.id.thumbimage);
-           m.setScaleType(ImageView.ScaleType.FIT_XY);
+           m= view.findViewById(R.id.thumbimage);
+
            m.setOnClickListener(this);
+           m.setAdjustViewBounds(true);
            context = view.getContext();
 
        }

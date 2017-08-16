@@ -27,10 +27,10 @@ public movie(String t,String p,String ot,String ov,String re,double vo)
 
     protected movie(Parcel in) {
         title = in.readString();
-        poster_path = in.readString();
         original_title = in.readString();
         overview = in.readString();
         release_date = in.readString();
+        poster_path = in.readString();
         vote_average = in.readDouble();
     }
 
@@ -54,7 +54,7 @@ public movie(String t,String p,String ot,String ov,String re,double vo)
     {
         return poster_path;
     }
-    public String getOriginal_title() {return original_title;}
+    public String etOriginal_title() {return original_title;}
     public String getOverview()
     {
         return overview;
