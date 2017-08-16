@@ -39,11 +39,11 @@ public class openJobjects {
 
         for (int i = 0; i < 20; i++) {
             String title;
-             String poster_path;
-             String original_title;
+            String poster_path;
+            String original_title;
 
             String overview;
-             String release_date;
+            String release_date;
             double vote_average;
 
             JSONObject moviej = movieArray.getJSONObject(i);
@@ -53,7 +53,7 @@ public class openJobjects {
             poster_path= moviej.getString("poster_path");
             original_title= moviej.getString("original_title");
             overview= moviej.getString("overview");
-             release_date= moviej.getString("release_date");
+            release_date= moviej.getString("release_date");
             vote_average= moviej.getDouble("vote_average");
 
             movie m=new movie(title,poster_path,original_title,overview,release_date,vote_average);
@@ -61,7 +61,7 @@ public class openJobjects {
 
         }
 
-return parsedData;
+        return parsedData;
     }
 
 }

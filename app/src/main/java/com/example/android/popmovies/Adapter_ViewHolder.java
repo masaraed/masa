@@ -68,7 +68,8 @@ return numberofitems;
        public ImageViewHolder(View view)
        {
            super(view);
-           m=(ImageView) view.findViewById(R.id.thumb_image);
+           m=(ImageView) view.findViewById(R.id.thumbimage);
+           m.setScaleType(ImageView.ScaleType.FIT_XY);
            m.setOnClickListener(this);
            context = view.getContext();
 

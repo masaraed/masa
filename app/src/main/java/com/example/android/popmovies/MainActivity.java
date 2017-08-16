@@ -1,5 +1,8 @@
 package com.example.android.popmovies;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -8,9 +11,11 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 import java.net.URL;
@@ -26,40 +31,60 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
     private static final int numberoftheitems = 20;
     ArrayList<movie> movies;
     private Adapter_ViewHolder.ImageViewHolder holder;
-    int id=R.id.mostpopular;
-
+    String popular="popular";
+    String toprated="top_rated";
+    GridLayoutManager gridlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
-        image = (ImageView) findViewById(R.id.thumb_image);
-        GridLayoutManager gridlayout = new GridLayoutManager(MainActivity.this, 2);
-        mRecyclerView.setLayoutManager(gridlayout);
-        mRecyclerView.setHasFixedSize(true);
+        image = (ImageView) findViewById(R.id.thumbimage);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            gridlayout = new GridLayoutManager(MainActivity.this, 4);
+            updatelayout(gridlayout, savedInstanceState);
+        }
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
 
-        if(savedInstanceState == null) {
-            FetchTask fetchTask = new FetchTask();
-
-            try {
-                movies = fetchTask.execute().get();
-            }
-             catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            }
+        {
+            gridlayout = new GridLayoutManager(MainActivity.this, 2);
+            updatelayout(gridlayout, savedInstanceState);
         }
 
-        else {
-            movies = savedInstanceState.getParcelableArrayList("movie");
+
         }
 
-        mAdapter = new Adapter_ViewHolder(numberoftheitems, this,movies);
-        mRecyclerView.setAdapter(mAdapter);
+    public void updatelayout(GridLayoutManager gridlayout,Bundle savedInstanceState)
+    {
+        if(!isNetworkAvailable())
+            return;
+        else{
 
 
-    }
+
+            mRecyclerView.setLayoutManager(gridlayout);
+
+
+            if (savedInstanceState == null) {
+                FetchTask fetchTask = new FetchTask();
+
+                try {
+                    movies = fetchTask.execute(popular).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                movies = savedInstanceState.getParcelableArrayList("movie");
+            }
+
+            mAdapter = new Adapter_ViewHolder(numberoftheitems, this, movies);
+            mRecyclerView.setAdapter(mAdapter);
+
+        }
+}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,28 +96,38 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        id=item.getItemId();
-       if(id!=R.id.mostpopular)
-           return true;
+        if (String.valueOf(item.getItemId()) == String.valueOf(R.id.mostpopular)) {
+            try {
+                movies = new FetchTask().execute(popular).get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
 
-       else
-           {
+            } catch (ExecutionException e) {
+                e.printStackTrace();
 
-        try {
-            movies = new FetchTask().execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            }
+            return true;
 
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        }
+        else {
 
+            try {
+                movies = new FetchTask().execute(toprated).get();
+            }
+            catch (InterruptedException e)
+            {
+                e.printStackTrace();
+
+            }
+            catch (ExecutionException e)
+            {
+                e.printStackTrace();
+
+            }
+        }
+return true;
     }
-               mAdapter = new Adapter_ViewHolder(numberoftheitems, this,movies);
-             mAdapter.updateList(movies);
-        return true;
-    }
 
-    }
 
 
 
@@ -103,11 +138,10 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
     }
 
 
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
+    private boolean isNetworkAvailable() {
+
+    return true;
+
     }
 
     @Override
@@ -119,17 +153,17 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
     }
 
 
-    public class FetchTask extends AsyncTask<Void, Void, ArrayList<movie>> {
+    public class FetchTask extends AsyncTask<String, Void, ArrayList<movie>> {
 
 
         @Override
-        protected ArrayList<movie> doInBackground(Void... voids) {
-            URL url = NetworkUtils.buildUrl(id);
+        protected ArrayList<movie> doInBackground(String... strings) {
+            URL url = NetworkUtils.buildUrl(strings[0]);
 
             try {
 
                 String httprespondString = NetworkUtils.getResponseFromHttpUrl(url);
-                 movies = openJobjects.getSimpleStringFromJson(MainActivity.this, httprespondString);
+                movies = openJobjects.getSimpleStringFromJson(MainActivity.this, httprespondString);
                 return movies;
 
             }
@@ -137,10 +171,9 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
                 e.printStackTrace();
                 return null;
             }
-
         }
 
-      @Override
+        @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
@@ -153,4 +186,3 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
         }
     }
 }
-

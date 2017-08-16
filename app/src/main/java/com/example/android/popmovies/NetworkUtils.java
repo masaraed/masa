@@ -15,35 +15,29 @@ import java.util.Scanner;
  */
 
 public class NetworkUtils {
-    final static String BASE_URL_popular =
-            "http://api.themoviedb.org/3/movie/popular?api_key=0d8a00c9715591d453d2184f3aab8cae";
-    final static String BASE_URL_toprated =
-            "http://api.themoviedb.org/3/movie/top_rated?api_key=0d8a00c9715591d453d2184f3aab8cae";
+    final static String BASE_URL =
+            "http://api.themoviedb.org/3/movie/";
+    final static String apikey="api_key=0d8a00c9715591d453d2184f3aab8cae";
 
-    public static URL buildUrl(int id) {
+
+    public static URL buildUrl(String s) {
 
         Uri builtUri=null;
-        if (id == R.id.mostpopular) {
-           builtUri= Uri.parse(BASE_URL_popular).buildUpon()
+
+            builtUri= Uri.parse(BASE_URL).buildUpon().appendPath(s).appendQueryParameter("api_key","0d8a00c9715591d453d2184f3aab8cae")
                     .build();
+
+        URL url = null;
+
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         }
 
-        if (id == R.id.toprated) {
-          builtUri = Uri.parse(BASE_URL_toprated).buildUpon()
-                    .build();
-        }
 
-            URL url = null;
-
-            try {
-                url = new URL(builtUri.toString());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-
-
-            return url;
-        }
+        return url;
+    }
 
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
