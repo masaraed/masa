@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
             gridlayout = new GridLayoutManager(MainActivity.this, 2);
             updatelayout(gridlayout, savedInstanceState,popular);
         }
-
+        mAdapter = new Adapter_ViewHolder(NUM_ITEMS, this, movies);
+        mRecyclerView.setAdapter(mAdapter);
 
     }
 
@@ -76,8 +77,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
                 movies = savedInstanceState.getParcelableArrayList("movie");
             }
 
-            mAdapter = new Adapter_ViewHolder(NUM_ITEMS, this, movies);
-            mRecyclerView.setAdapter(mAdapter);
+
         }
 
     }
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
         }
         return isAvailable;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menu1 = getMenuInflater();

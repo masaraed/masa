@@ -4,9 +4,7 @@
     android:verticalScrollbarPosition="right"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,10 +20,12 @@
                 android:lineSpacingExtra="8sp"
                 android:paddingBottom="40dp"
                 android:paddingStart="20dp"
+
                 android:paddingTop="40dp"
                 android:text="This is just Default Text"
                 android:textColor="@android:color/white"
-                android:textSize="40sp" />
+                android:textSize="40sp"
+                android:paddingLeft="0dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                         android:id="@+id/details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
                         android:layout_weight="1"
                         android:text="This is just Default Text"
                         android:textSize="25sp" />
@@ -78,6 +78,5 @@
                 android:text="This is just Default Text"
                 android:textSize="20sp" />
         </LinearLayout>
-    </ScrollView>
 
 </LinearLayout >

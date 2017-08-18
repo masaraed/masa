@@ -1,12 +1,10 @@
 package com.example.android.popmovies;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -14,15 +12,16 @@ import java.util.ArrayList;
 
 
 public class Adapter_ViewHolder extends RecyclerView.Adapter<Adapter_ViewHolder.ImageViewHolder> {
-    int numberofitems;
+    int numberOfItems;
     private ListItemClickListner mOnClickListner;
-    private ArrayList<Movie> movies;
+    private ArrayList<Movie> movies = new ArrayList<>();
 
 
     public Adapter_ViewHolder(int Numberofitems, ListItemClickListner listner, ArrayList<Movie> moviesArray) {
-        numberofitems = Numberofitems;
+        numberOfItems = Numberofitems;
         mOnClickListner = listner;
-        movies = moviesArray;
+        movies=moviesArray;
+
     }
 
     @Override
@@ -48,7 +47,7 @@ public class Adapter_ViewHolder extends RecyclerView.Adapter<Adapter_ViewHolder.
 
     @Override
     public int getItemCount() {
-        return numberofitems;
+        return numberOfItems;
     }
 
 
