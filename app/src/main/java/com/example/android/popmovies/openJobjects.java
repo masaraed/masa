@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 
 public class openJobjects {
-    public static ArrayList<movie> getSimpleStringFromJson(Context context, String httpstring)
+    public static ArrayList<Movie> getSimpleStringFromJson(Context context, String httpstring)
             throws JSONException {
 
         final String LIST = "results";
 
-        ArrayList<movie> parsedData = new ArrayList<movie>(20);
+        ArrayList<Movie> parsedData = new ArrayList<Movie>(20);
 
         JSONObject movieJson = new JSONObject(httpstring);
 
@@ -51,7 +51,7 @@ public class openJobjects {
             release_date= moviej.getString("release_date");
             vote_average= moviej.getDouble("vote_average");
 
-            movie m=new movie(title,poster_path,original_title,overview,release_date,vote_average);
+            Movie m=new Movie(title,poster_path,original_title,overview,release_date,vote_average);
             parsedData.add(m);
 
         }

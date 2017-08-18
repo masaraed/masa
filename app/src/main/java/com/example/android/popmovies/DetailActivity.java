@@ -8,28 +8,34 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+
 
 public class DetailActivity extends AppCompatActivity {
-    TextView dtext,namemovie,description;
+    TextView rDate,nameMovie,overview,rate;
     ImageView poster;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail2);
-        dtext = (TextView) findViewById(R.id.details);
-        namemovie= (TextView) findViewById(R.id.moviename);
-        description=(TextView) findViewById(R.id.description);
+        rDate = (TextView) findViewById(R.id.details);
+        nameMovie= (TextView) findViewById(R.id.moviename);
+        rate= (TextView) findViewById(R.id.rate);
+
+        overview=(TextView) findViewById(R.id.description);
         poster = (ImageView) findViewById(R.id.image);
 
         Intent intentThatStartedThisActivity = getIntent();
         if (intentThatStartedThisActivity.hasExtra("movie") ){
 
-          movie movie = intentThatStartedThisActivity.getParcelableExtra("movie");
-            dtext.setText(movie.getRelease_date()+"\n"+movie.getVoteAverage().toString());
-            Picasso.with(DetailActivity.this).load("http://image.tmdb.org/t/p/w185/"+movie.getPoster_path()).resize(185 , 278).into(poster);
-            namemovie.setText(movie.getTitle());
-           description.setText(movie.getOverview());
+            Movie movie = intentThatStartedThisActivity.getParcelableExtra("movie");
+            String date[] = movie.getRelease_date().split("-");
+            int year = Integer.parseInt(date[0]);
+            rDate.setText(String.valueOf(year));
+            rate.setText(movie.getVoteAverage().toString()+"/10");
+
+            Picasso.with(DetailActivity.this).load("http://image.tmdb.org/t/p/w342/"+movie.getPoster_path()).into(poster);
+            nameMovie.setText(movie.getTitle());
+            overview.setText(movie.getOverview());
 
         }
     }

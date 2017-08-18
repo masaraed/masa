@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
     ImageView image;
     private Toast mtoast;
     private static final int NUM_ITEMS = 20;
-    ArrayList<movie> movies;
+    ArrayList<Movie> movies;
     private Adapter_ViewHolder.ImageViewHolder holder;
     String popular="popular";
     String toprated="top_rated";
@@ -44,43 +44,43 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
             gridlayout = new GridLayoutManager(MainActivity.this, 4);
             updatelayout(gridlayout, savedInstanceState,popular);
         }
-       else
+        else
         {
             gridlayout = new GridLayoutManager(MainActivity.this, 2);
             updatelayout(gridlayout, savedInstanceState,popular);
         }
 
 
-        }
+    }
 
 
     public void updatelayout(GridLayoutManager gridlayout,Bundle savedInstanceState,String s)
     {
-          if(!online())
-          mtoast.makeText(MainActivity.this,"This app need Internet Connection",Toast.LENGTH_LONG).show();
-              else {
-              mRecyclerView.setLayoutManager(gridlayout);
+        if(!online())
+            mtoast.makeText(MainActivity.this,"This app need Internet Connection",Toast.LENGTH_LONG).show();
+        else {
+            mRecyclerView.setLayoutManager(gridlayout);
 
 
-              if (bundle == null) {
-                  FetchTask fetchTask = new FetchTask();
+            if (bundle == null) {
+                FetchTask fetchTask = new FetchTask();
 
-                  try {
-                      movies = fetchTask.execute(s).get();
-                  } catch (InterruptedException e) {
-                      e.printStackTrace();
-                  } catch (ExecutionException e) {
-                      e.printStackTrace();
-                  }
-              } else {
-                  movies = savedInstanceState.getParcelableArrayList("movie");
-              }
+                try {
+                    movies = fetchTask.execute(s).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                movies = savedInstanceState.getParcelableArrayList("movie");
+            }
 
-              mAdapter = new Adapter_ViewHolder(NUM_ITEMS, this, movies);
-              mRecyclerView.setAdapter(mAdapter);
-          }
+            mAdapter = new Adapter_ViewHolder(NUM_ITEMS, this, movies);
+            mRecyclerView.setAdapter(mAdapter);
+        }
 
-}
+    }
 
     public boolean online()
     {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
 
 
     @Override
-    public void onListItemClick(movie movie) {
+    public void onListItemClick(Movie movie) {
         Intent intent = new Intent(MainActivity.this, DetailActivity.class);
         intent.putExtra("movie",movie);
         startActivity(intent);
@@ -131,11 +131,11 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
 
 
 
-    public class FetchTask extends AsyncTask<String, Void, ArrayList<movie>> {
+    public class FetchTask extends AsyncTask<String, Void, ArrayList<Movie>> {
 
 
         @Override
-        protected ArrayList<movie> doInBackground(String... strings) {
+        protected ArrayList<Movie> doInBackground(String... strings) {
             NetworkUtils.string=strings[0];
             URL url = NetworkUtils.buildUrl();
 
@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements Adapter_ViewHolde
 
 
         @Override
-        protected void onPostExecute(ArrayList<movie> movies) {
+        protected void onPostExecute(ArrayList<Movie> movies) {
             super.onPostExecute(movies);
         }
     }

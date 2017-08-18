@@ -1,71 +1,67 @@
 package com.example.android.popmovies;
 
-import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by masa on 8/13/17.
- */
 
-public class movie implements Parcelable {
+public class Movie implements Parcelable {
+
     private String title;
-    private String poster_path;
-    private String original_title;
+    private String posterPath;
+    private String originalTitle;
     private String overview;
-    private String release_date;
-    private double vote_average;
-public movie(String t,String p,String ot,String ov,String re,double vo)
-{
-    title=t;
-    poster_path=p;
-    original_title=ot;
-    overview=ov;
-    release_date=re;
-    vote_average=vo;
-}
-
-    protected movie(Parcel in) {
-        title = in.readString();
-        original_title = in.readString();
-        overview = in.readString();
-        release_date = in.readString();
-        poster_path = in.readString();
-        vote_average = in.readDouble();
+    private String releaseDate;
+    private double voteAverage;
+    public Movie(String t, String pp, String ot, String ov, String rd, double va)
+    {
+        title=t;
+        posterPath=pp;
+        originalTitle=ot;
+        overview=ov;
+        releaseDate=rd;
+        voteAverage=va;
     }
 
-    public static final Creator<movie> CREATOR = new Creator<movie>() {
+    protected Movie(Parcel in) {
+        title = in.readString();
+        originalTitle = in.readString();
+        overview = in.readString();
+        releaseDate = in.readString();
+        posterPath = in.readString();
+        voteAverage = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
         @Override
-        public movie createFromParcel(Parcel in) {
-            return new movie(in);
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
         }
 
         @Override
-        public movie[] newArray(int size) {
-            return new movie[size];
+        public Movie[] newArray(int size) {
+            return new Movie[size];
         }
     };
 
     public String getTitle()
-{
-    return title;
-}
+    {
+        return title;
+    }
     public String getPoster_path()
     {
-        return poster_path;
+        return posterPath;
     }
-    public String etOriginal_title() {return original_title;}
+    public String etOriginal_title() {return originalTitle;}
     public String getOverview()
     {
         return overview;
     }
-    public String getRelease_date()
-    {
-        return release_date;
+    public String getRelease_date() {
+        return releaseDate;
     }
     public Double getVoteAverage()
     {
-        return vote_average;
+        return voteAverage;
     }
 
 
@@ -77,14 +73,15 @@ public movie(String t,String p,String ot,String ov,String re,double vo)
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
-        parcel.writeString(original_title);
+        parcel.writeString(originalTitle);
         parcel.writeString(overview);
-        parcel.writeString(release_date);
-        parcel.writeString(poster_path);
-        parcel.writeDouble(vote_average);
+        parcel.writeString(releaseDate);
+        parcel.writeString(posterPath);
+        parcel.writeDouble(voteAverage);
 
 
 
 
     }
 }
+

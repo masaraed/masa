@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,8 +21,8 @@
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="DetailMovies">
+            android:label="DetailMovies"
+            android:parentActivityName=".MainActivity">
             #strings
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
